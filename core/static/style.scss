@@ -191,9 +191,18 @@ ul.CTAs a {
 }
 
 .inside-content {
-    padding-left: 200px;
-    padding-right: 200px;
+    padding-left: 300px;
+    padding-right: 300px;
+    padding-top: 60px;
     padding-bottom: 30px;
+}
+
+.content-section {
+    background: #fdefef;
+    padding: 50px 50px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
 }
 
 /* ---------------------------------------------------
