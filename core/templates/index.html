@@ -14,11 +14,14 @@
             </div>
         {% else %}
             {{ form.username(class="form-control form-control mr-3", placeholder=form.username.label.text, id="username") }}
-            {{ form.submit(class="btn btn-outline-secondary") }}
+            {{ form.submit(class="btn btn-outline-secondary", id="submit") }}
         {% endif %}
     </div>
 </form>
 <div class="mt-5" style="text-align:left;">
-    <h3 id="username-text"></h3>
+    <h5 id="username-text"></h5>
+    {% if total_channels %}
+        <p id="total-channels">Number of Channels: {{ total_channels }}</p>
+    {% endif %}
 </div>
 {% endblock content %}
