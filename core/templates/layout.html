@@ -23,6 +23,9 @@
         <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
+        <!-- Local JS File -->
+        <script src="{{ url_for('static', filename='index.js') }}"></script>
+
         <!-- Social Media Icons -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
@@ -62,7 +65,8 @@
                         <a class="nav-item nav-link" href="#">Logout</a>
                     {% else %}
                         <a class="nav-item nav-link" href="#">Login</a>
-                        <a class="nav-item nav-link" href="#}">Register</a>
+                        <a class="nav-item nav-link" href="#">Register</a>
+                        <button class="btn btn-secondary" type="button" id="signout">Sign Out</button>
                     {% endif %}
                 </nav>
                 <div class="inside-content">

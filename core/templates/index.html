@@ -1,14 +1,11 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div style="text-align: center">
-    <h1></h1>
-</div>
-<form method="POST" action="" class="content-section form-inline">
+<form method="POST" action="" class="content-section form-inline" id="username-form">
     {{ form.hidden_tag() }}
     <div class="form-group mx-sm-3">
         {% if form.username.errors %}
-            {{ form.username(class="form-control form-control is-invalid mr-3")}}
+            {{ form.username(class="form-control form-control is-invalid mr-3", id="username") }}
             {{ form.submit(class="btn btn-outline-secondary") }}
             <div class="invalid-feedback">
                 {% for error in form.username.errors %}
@@ -16,9 +13,12 @@
                 {% endfor %}
             </div>
         {% else %}
-            {{ form.username(class="form-control form-control mr-3", placeholder=form.username.label.text) }}
+            {{ form.username(class="form-control form-control mr-3", placeholder=form.username.label.text, id="username") }}
             {{ form.submit(class="btn btn-outline-secondary") }}
         {% endif %}
     </div>
 </form>
+<div class="mt-5" style="text-align:left;">
+    <h3 id="username-text"></h3>
+</div>
 {% endblock content %}
