@@ -9,7 +9,7 @@
 /* Navbar 02 */
 /* Navbar Text */
 /* Content Text */
-/* Icons */
+/* Background Light Pink */
 /* Inheritance */
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 p,
@@ -215,18 +215,10 @@ ul.CTAs a {
   }
 }
 /* ---------------------------------------------------
-    FONT AWESOME ICONS STYLE
+    MODAL POP-UP
 ----------------------------------------------------- */
-.fa-github-square {
-  color: #6f66a3;
-}
-
-.fa-linkedin {
-  color: #6f66a3;
-}
-
-.fa-envelope-square {
-  color: #6f66a3;
+.modal-body {
+  background: #fdefef;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -7,11 +7,11 @@
     SASS VARIABLES
 ----------------------------------------------------- */
 
-$color01: rgb(250, 109, 109);    /* Navbar 01 */
+$color01: rgb(250, 109, 109);   /* Navbar 01 */
 $color02: rgb(253, 170, 170);   /* Navbar 02 */
 $color03: black;                /* Navbar Text */
 $color04: rgb(105, 105, 105);   /* Content Text */
-$color05: rgb(111, 102, 163);   /* Icons */
+$color05: #fdefef;              /* Background Light Pink */
 
 /* Inheritance */
 %font-family01 {
@@ -198,7 +198,7 @@ ul.CTAs a {
 }
 
 .content-section {
-    background: #fdefef;
+    background: $color05;
     padding: 50px 50px;
     border: 1px solid #dddddd;
     border-radius: 3px;
@@ -228,17 +228,9 @@ ul.CTAs a {
 }
 
 /* ---------------------------------------------------
-    FONT AWESOME ICONS STYLE
+    MODAL POP-UP
 ----------------------------------------------------- */
 
-.fa-github-square {
-    color: $color05;
-}
-
-.fa-linkedin {
-    color: $color05;
-}
-
-.fa-envelope-square {
-    color: $color05;
+.modal-body {
+    background: $color05;
 }

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 from flask_socketio import emit
-from core.main.forms import UsernameForm
+from core.main.forms import UsernameForm, ChannelNameForm
 from core import socketio
 
 
@@ -8,26 +8,33 @@ from core import socketio
 main = Blueprint('main', __name__)
 
 
+channels = {"total": 0}
+
 
 @main.route("/", methods=['GET', 'POST'])
 def index():
-    form = UsernameForm()
-    if form.validate_on_submit():
-        return render_template("index.html", title="test", form=form)
-        
-    return render_template("index.html", title="Home", form=form)
+    usernameform = UsernameForm()
+    channelnameform = ChannelNameForm()
+    if usernameform.validate_on_submit():
+        return render_template("index.html", title="test", usernameform=usernameform, channelnameform=channelnameform, channels=channels)
+    if channelnameform.validate_on_submit():
+        return render_template("index.html", title="test1", usernameform=usernameform, channelnameform=channelnameform, channels=channels)
+    return render_template("index.html", title="Home", usernameform=usernameform, channelnameform=channelnameform, channels=channels)
 
 
 @socketio.on("add channel")
 def add_channel():
-    total_channels = 0
-    total_channels += 1
-    emit("total channels", total_channels, broadcast=True)
+    channels["total"] += 1
+    channelnameform = ChannelNameForm()
+    emit("channels", channels, channelnameform, broadcast=True)
 
 
-@main.route("/contact")
-def contact():
-    return render_template("contact.html")
+@socketio.on("delete channel")
+def delete_channel():
+    channels["total"] -= 1
+    emit("channels", channels, broadcast=True)
+
+
 
 
     
