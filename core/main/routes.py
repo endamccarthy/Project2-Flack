@@ -31,7 +31,8 @@ def add_channel():
 
 @socketio.on("delete channel")
 def delete_channel():
-    channels["total"] -= 1
+    if channels["total"] > 0:
+        channels["total"] -= 1
     emit("channels", channels, broadcast=True)
 
 
