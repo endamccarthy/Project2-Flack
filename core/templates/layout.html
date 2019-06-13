@@ -44,11 +44,11 @@
                     <li>
                         <a href="{{ url_for('main.index') }}">Home</a>
                     </li>
-                    <li>
-                        <a href="#" data-toggle="modal" data-target="#ModalCenter" id="add-channel">Add Channel</a>
+                    <li class="hidden" id="add-channel">
+                        <a href="#" data-toggle="modal" data-target="#ModalCenter">Add Channel</a>
                     </li>
-                    <li>
-                        <a href="#" id="delete-channel">Delete Channel</a>
+                    <li class="hidden" id="delete-channel">
+                        <a href="#">Delete Channel</a>
                     </li>
                 </ul>
             </nav>
@@ -63,7 +63,7 @@
                             <h3>CS50 Web Programming - Project 2</h3>
                         </a>
                     </div>
-                    <button class="btn btn-secondary" type="button" id="signout">Sign Out</button>
+                    <button class="btn btn-secondary hidden" type="button" id="signout">Sign Out</button>
                 </nav>
                 <div class="inside-content">
                     {% with messages = get_flashed_messages(with_categories=true) %}

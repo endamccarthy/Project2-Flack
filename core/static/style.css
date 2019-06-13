@@ -221,4 +221,11 @@ ul.CTAs a {
   background: #fdefef;
 }
 
+/* ---------------------------------------------------
+    HIDDEN CONTENT
+----------------------------------------------------- */
+.hidden {
+  display: none;
+}
+
 /*# sourceMappingURL=style.css.map */

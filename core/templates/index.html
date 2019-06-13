@@ -1,25 +1,16 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<form method="POST" action="" class="content-section form-inline" id="username-form">
-    {{ usernameform.hidden_tag() }}
+<form method="POST" action="" class="content-section form-inline hidden" id="username-form">
     <div class="form-group mx-sm-3">
-        {% if usernameform.username.errors %}
-            {{ usernameform.username(class="form-control form-control is-invalid mr-3", id="username") }}
-            {{ usernameform.submit(class="btn btn-outline-secondary") }}
-            <div class="invalid-feedback">
-                {% for error in usernameform.username.errors %}
-                    <span>{{ error }}</span>
-                {% endfor %}
-            </div>
-        {% else %}
-            {{ usernameform.username(class="form-control form-control mr-3", placeholder=usernameform.username.label.text, id="username") }}
-            {{ usernameform.submit(class="btn btn-outline-secondary", id="submit") }}
-        {% endif %}
+        <input class="form-control mr-3" id="username" autocomplete="off" autofocus placeholder="Enter Username" type="text">
+        <input class="btn btn-outline-secondary" id="submit" type="submit" value="Submit">
     </div>
 </form>
+<br>
+<div id="result"></div>
+<br>
 <div class="mt-5" style="text-align:left;">
-    <h5 id="username-text"></h5>
     {% if channels["total"] > 0 %}
         <p>Number of Channels: <span id="channels">{{ channels["total"] }}</span></p>
     {% endif %}
