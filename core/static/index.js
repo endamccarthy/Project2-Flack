@@ -8,74 +8,39 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#result').innerHTML = `You are signed in as ${localStorage.getItem('username')}`;
         document.querySelector('#signout').style.display = "block";
         document.querySelector('#add-channel').style.display = "block";
+        document.querySelector('#delete-channel').style.display = "block";
     }
 
-
+    // signing in process
     document.querySelector('#username-form').onsubmit = () => {
-
-        // Initialize new request
+        // initialize new request
         const request = new XMLHttpRequest();
         const username = document.querySelector('#username').value;
         request.open('POST', '/signin');
-
-        // Callback function for when request completes
+        // callback function for when request completes
         request.onload = () => {
-
-            // Extract JSON data from request
+            // extract JSON data from request
             const data = JSON.parse(request.responseText);
-
-            // Update the result div
+            // save username to lacal storage and update the page if signing in is successful
             if (data.success) {
                 localStorage.setItem('username', username);
                 document.querySelector('#username-form').style.display = "none";
                 document.querySelector('#signout').style.display = "block";
                 document.querySelector('#add-channel').style.display = "block";
+                document.querySelector('#delete-channel').style.display = "block";
                 document.querySelector('#result').innerHTML = `You are signed in as ${username}`;
             }
             else {
                 alert('Please enter a valid username');
             }
         }
-
-        // Add data to send with request
+        // add data to send with request
         const data = new FormData();
         data.append('username', username);
-
-        // Send request
+        // send request
         request.send(data);
         return false;
     };
-
-    /*
-    // check if username is already saved in local storage, if not then set it to the form response
-    if (!localStorage.getItem('username')) {
-        document.querySelector('#username-text').innerHTML = "";
-        document.querySelector('#username-form').onsubmit = () => {
-            localStorage.setItem('username', document.querySelector('#username').value);
-            document.querySelector('#signout').style.display = "block";
-            document.querySelector('#add-channel').style.display = "block";
-            if (localStorage.getItem('channels') == 0) () => {
-                document.querySelector('#delete-channel').style.display = "none";
-            }
-            else {
-                document.querySelector('#delete-channel').style.display = "block";
-            }
-            alert(`You are signed as ${localStorage.getItem('username')}`)
-        };
-    }
-    else {
-        document.querySelector('#username-text').innerHTML = `Signed in as: ${localStorage.getItem('username')}!`;
-        document.querySelector('#username-form').style.display = "none";
-        document.querySelector('#signout').style.display = "block";
-        document.querySelector('#add-channel').style.display = "block";
-        if (localStorage.getItem('channels') == 0) () => {
-            document.querySelector('#delete-channel').style.display = "none";
-        }
-        else {
-            document.querySelector('#delete-channel').style.display = "block";
-        }
-    }
-    */
 
     // sign out
     document.querySelector('#signout').onclick = () => {
@@ -88,30 +53,22 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#username-form').style.display = "block";
     }
 
-
-    // Connect to websocket
+    // connect to websocket
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
-    // When connected, configure add channel button
+    // when connected, configure add channel button
     socket.on('connect', () => {
         document.querySelector('#channelSubmit').onclick = () => {
             socket.emit('add channel');
         };
-        document.querySelector('#delete-channel').onclick = () => {
+        document.querySelector('#channelDelete').onclick = () => {
             socket.emit('delete channel');
         };
     });
 
-    // When a new channel is created or deleted......
+    // when a channel is created or deleted update channels in local storage
     socket.on('channels', data => {
         localStorage.setItem('channels', data.total);
-        document.querySelector('#channels').innerHTML = localStorage.getItem('channels');
-        if (localStorage.getItem('channels') == 0) () => {
-            document.querySelector('#delete-channel').style.display = "none";
-        }
-        else {
-            document.querySelector('#delete-channel').style.display = "block";
-        }
     });
 
 });
