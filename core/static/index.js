@@ -60,31 +60,60 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    // adding a channel
+    document.querySelector('#channelName-form').onsubmit = () => {
+        // initialize new request
+        const request = new XMLHttpRequest();
+        const channelName = document.querySelector('#channelName').value;
+        request.open('POST', '/addChannel');
+        // callback function for when request completes
+        request.onload = () => {
+            // extract JSON data from request
+            const data = JSON.parse(request.responseText);
+            // save username to lacal storage and update the page if signing in is successful
+            if (!data.success) {
+                alert('Invalid Channel Name');
+                //localStorage.setItem('username', username);
+            }
+        }
+        // add data to send with request
+        const data = new FormData();
+        data.append('channelName', channelName);
+        // send request
+        request.send(data);
+        return False;
+    };
+
+
+
     // connect to websocket
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
     // when connected, configure add channel button
     socket.on('connect', () => {
+        /*
         document.querySelector('#channelSubmit').onclick = () => {
             channelName = document.querySelector('#channelName').value;
-            if (channelName.length < 2) {
+            if (channelName.length < 1) {
                 document.querySelector('#channelNameError').innerHTML = "Invalid Channel Name";
                 return false;
             }
             socket.emit('add channel', channelName);
         };
+        */
         document.querySelector('#channelDelete').onclick = () => {
             socket.emit('delete channel');
         };
     });
 
-    
+    /*
     // when a channel is created or deleted update channels in local storage
     socket.on('channels', data => {
         if (!data.success) {
-            document.querySelector('#channelNameError').innerHTML = "Invalid Channel Name";
+            alert('Invalid Channel Name');
+            //document.querySelector('#channelNameError').innerHTML = "Invalid Channel Name";
         }
         //localStorage.setItem('channels', data.total);
     });
-    
+    */
 });
