@@ -53,22 +53,38 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#username-form').style.display = "block";
     }
 
+    // clear any previous errors or text from the add channel modal
+    document.querySelector('#add-channel').onclick = () => {
+        document.querySelector('#channelName').value = "";
+        document.querySelector('#channelNameError').innerHTML = "";
+    }
+
+
     // connect to websocket
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
     // when connected, configure add channel button
     socket.on('connect', () => {
         document.querySelector('#channelSubmit').onclick = () => {
-            socket.emit('add channel');
+            channelName = document.querySelector('#channelName').value;
+            if (channelName.length < 2) {
+                document.querySelector('#channelNameError').innerHTML = "Invalid Channel Name";
+                return false;
+            }
+            socket.emit('add channel', channelName);
         };
         document.querySelector('#channelDelete').onclick = () => {
             socket.emit('delete channel');
         };
     });
 
+    
     // when a channel is created or deleted update channels in local storage
     socket.on('channels', data => {
-        localStorage.setItem('channels', data.total);
+        if (!data.success) {
+            document.querySelector('#channelNameError').innerHTML = "Invalid Channel Name";
+        }
+        //localStorage.setItem('channels', data.total);
     });
-
+    
 });

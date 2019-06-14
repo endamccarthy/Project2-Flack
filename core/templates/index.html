@@ -18,6 +18,9 @@
 <div id="test"></div>
 <div>
     <ul id="channels-list">
+        {% for channelName in channelNames %}
+            <li>{{ channelName }}</li>
+        {% endfor %}
     </ul>
 </div>
 {% endblock content %}

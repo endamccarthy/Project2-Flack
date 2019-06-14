@@ -8,11 +8,12 @@ main = Blueprint('main', __name__)
 
 
 channels = {"total": 0}
+channelNames = []
 
 
 @main.route("/")
 def index():
-    return render_template("index.html", title="Home", channels=channels)
+    return render_template("index.html", title="Home", channels=channels, channelNames=channelNames)
 
 
 @main.route("/signin", methods=["POST"])
@@ -26,18 +27,18 @@ def signin():
 
 
 @socketio.on("add channel")
-def add_channel():
+def add_channel(channelName):
+    if channelName in channelNames:
+        print("test")
+        return False
+    channelNames.append(channelName)
     channels["total"] += 1
-    emit("channels", channels, broadcast=True)
+    emit("channels", broadcast=True)
 
 
 @socketio.on("delete channel")
 def delete_channel():
     if channels["total"] > 0:
+        del channelNames[-1]
         channels["total"] -= 1
-    emit("channels", channels, broadcast=True)
-
-
-
-
-    
+    emit("channels", broadcast=True)
