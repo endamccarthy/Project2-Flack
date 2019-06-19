@@ -7,6 +7,12 @@
         <input class="btn btn-outline-secondary" id="submit" type="submit" value="Submit">
     </div>
 </form>
+<form action="" class="content-section form-inline hidden" id="channelName-form">
+    <div class="form-group mx-sm-3">
+        <input class="form-control mr-3" id="channelName" autocomplete="off" autofocus placeholder="Enter Channel Name" type="text">
+        <input class="btn btn-outline-secondary" id="channelSubmit" type="submit" value="Submit">
+    </div>
+</form>
 <br>
 <div id="result"></div>
 <br>
@@ -15,7 +21,6 @@
         <p>Number of Channels: <span id="channels">{{ channels["total"] }}</span></p>
     {% endif %}
 </div>
-<div id="test"></div>
 <div>
     <ul id="channels-list">
         {% for channelName in channelNames %}

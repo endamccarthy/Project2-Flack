@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else {
         document.querySelector('#result').innerHTML = `You are signed in as ${localStorage.getItem('username')}`;
         document.querySelector('#signout').style.display = "block";
-        document.querySelector('#add-channel').style.display = "block";
+        document.querySelector('#channelName-form').style.display = "block";
         document.querySelector('#delete-channel').style.display = "block";
     }
 
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('username', username);
                 document.querySelector('#username-form').style.display = "none";
                 document.querySelector('#signout').style.display = "block";
-                document.querySelector('#add-channel').style.display = "block";
+                document.querySelector('#channelName-form').style.display = "block";
                 document.querySelector('#delete-channel').style.display = "block";
                 document.querySelector('#result').innerHTML = `You are signed in as ${username}`;
             }
@@ -46,20 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#signout').onclick = () => {
         localStorage.removeItem('username');
         document.querySelector('#signout').style.display = "none";
-        document.querySelector('#add-channel').style.display = "none";
+        document.querySelector('#channelName-form').style.display = "none";
         document.querySelector('#delete-channel').style.display = "none";
         document.querySelector('#username').value = "";
         document.querySelector('#result').innerHTML = "";
         document.querySelector('#username-form').style.display = "block";
     }
 
-    // clear any previous errors or text from the add channel modal
-    document.querySelector('#add-channel').onclick = () => {
-        document.querySelector('#channelName').value = "";
-        document.querySelector('#channelNameError').innerHTML = "";
-    }
-
-
+/*
     // adding a channel
     document.querySelector('#channelName-form').onsubmit = () => {
         // initialize new request
@@ -71,9 +65,21 @@ document.addEventListener('DOMContentLoaded', () => {
             // extract JSON data from request
             const data = JSON.parse(request.responseText);
             // save username to lacal storage and update the page if signing in is successful
-            if (!data.success) {
-                alert('Invalid Channel Name');
+            if (data.success) {
+                alert('Valid Channel Name');
+
+                const li = document.createElement('li');
+                li.innerHTML = document.querySelector('#channelName').value;
+                // Add new item to task list
+                document.querySelector('#channels-list').append(li);
+
+
+                document.querySelector('#channelName').value = "";
                 //localStorage.setItem('username', username);
+            }
+            else {
+                alert('Invalid Channel Name');
+                document.querySelector('#channelName').value = "";
             }
         }
         // add data to send with request
@@ -81,8 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
         data.append('channelName', channelName);
         // send request
         request.send(data);
-        return False;
+        return false;
     };
+*/
 
 
 
@@ -91,19 +98,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // when connected, configure add channel button
     socket.on('connect', () => {
-        /*
         document.querySelector('#channelSubmit').onclick = () => {
             channelName = document.querySelector('#channelName').value;
-            if (channelName.length < 1) {
-                document.querySelector('#channelNameError').innerHTML = "Invalid Channel Name";
-                return false;
-            }
-            socket.emit('add channel', channelName);
+            socket.emit('channel name check', channelName);
         };
-        */
+        
         document.querySelector('#channelDelete').onclick = () => {
             socket.emit('delete channel');
         };
+    });
+
+    socket.on('add channel', data => {
+        if (data.success == "true") {
+            alert('Valid Channel Name');
+        }
+        else {
+            alert('Invalid Channel Name');
+        }
     });
 
     /*

@@ -44,9 +44,6 @@
                     <li>
                         <a href="{{ url_for('main.index') }}">Home</a>
                     </li>
-                    <li class="hidden" id="add-channel">
-                        <a href="#" data-toggle="modal" data-target="#addChannel">Add Channel</a>
-                    </li>
                     <li class="hidden" id="delete-channel">
                         {% if channels["total"] > 0 %}
                             <a href="#" data-toggle="modal" data-target="#deleteChannel">Delete Channel</a>
@@ -86,30 +83,6 @@
             </div>
         </div>
 
-
-        <div class="modal fade" id="addChannel" tabindex="-1" role="dialog" aria-labelledby="addChannelTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ModalLongTitle">Create A New Channel</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="error-message mx-sm-3" id="channelNameError"></div>
-                        <form method="POST" action="" class="form-inline" id="channelName-form">
-                            <div class="form-group mx-sm-3">
-                                <input class="form-control mr-3" id="channelName" autocomplete="off" autofocus placeholder="Enter Channel Name" type="text">
-                            </div>
-                            <div class="modal-footer">
-                                <input class="btn btn-outline-secondary" id="channelSubmit" type="submit" value="Submit">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="modal fade" id="deleteChannel" tabindex="-1" role="dialog" aria-labelledby="deleteChannelTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
