@@ -25,29 +25,18 @@ def signin():
         return jsonify({"success": False})
     return jsonify({"success": True})
 
-'''
-@main.route("/addChannel", methods=["POST"])
-def addChannel():
-    # query for username
-    channelName = request.form.get("channelName")
-    # make sure username is valid
+
+@socketio.on("channelNameCheck")
+def channelNameCheck(channelName):
     if channelName in channelNames:
-        return jsonify({"success": False})
+        emit("addChannel", {"success": "False"}, broadcast=False)
+        return False
     channelNames.append(channelName)
     channels["total"] += 1
-    return jsonify({"success": True})
-'''
-
-@socketio.on("channel name check")
-def channel_name_check(channelName):
-    if channelName in channelNames:
-        emit("add channel", {"success": "False"}, broadcast=False)
-    channelNames.append(channelName)
-    channels["total"] += 1
-    emit("add channel", {"success": "True"}, broadcast=True)
+    emit("addChannel", {"success": "True"}, broadcast=True)
 
 
-@socketio.on("delete channel")
+@socketio.on("deleteChannel")
 def delete_channel():
     if channels["total"] > 0:
         del channelNames[-1]
