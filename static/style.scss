@@ -1,6 +1,6 @@
 /* ---------------------------------------------------
     TYPE IN THIS COMMAND TO SETUP:
-        sass core/static/style.scss core/static/style.css
+        sass static/style.scss static/style.css
 ----------------------------------------------------- */
 
 /* ---------------------------------------------------
@@ -72,109 +72,9 @@ a:focus {
     font-size: 0.8em;
   }
 
-img {
-    margin-left: 40px;
-}
-
-#headshot {
-    max-width: 75%;
-}
-
 .error-message {
     font-size: 0.8em;
     color: red;
-}
-
-/* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
-
-.wrapper {
-    display: flex;
-    width: 100%;
-}
-
-#sidebar {
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    z-index: 999;
-    background: $color02;
-    color: $color03;
-    transition: all 0.3s;
-}
-
-#sidebar.active {
-    margin-left: -250px;
-}
-
-/* SCSS Nesting */
-#sidebar {
-    .sidebar-header {
-        padding-left: 10px;
-        padding-top: 20px;
-        background: $color01;
-        min-height: 90px;
-    }
-
-    ul.components {
-        padding: 20px 0;
-        border-bottom: 1px solid #47748b;
-    }
-
-    ul p {
-        color: $color03;
-        padding: 10px;
-    }
-
-    ul li a {
-        padding: 10px;
-        font-size: 1.1em;
-        display: block;
-    }
-
-    ul li a:hover {
-        color: $color02;
-        background: #fff;
-    }
-
-    ul li.active>a,
-    a[aria-expanded="true"] {
-        color: $color03;
-        background: $color01;
-    }
-} 
-
-a[data-toggle="collapse"] {
-    position: relative;
-}
-
-.dropdown-toggle::after {
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-}
-
-ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: $color02;
-}
-
-ul.CTAs {
-    padding: 20px;
-}
-
-ul.CTAs a {
-    text-align: center;
-    font-size: 0.9em !important;
-    display: block;
-    border-radius: 5px;
-    margin-bottom: 5px;
 }
 
 /* ---------------------------------------------------
@@ -182,7 +82,7 @@ ul.CTAs a {
 ----------------------------------------------------- */
 
 #content {
-    width: calc(100% - 250px);
+    width: 100%;
     padding: 0px;
     min-height: 100vh;
     transition: all 0.3s;
@@ -208,28 +108,6 @@ ul.CTAs a {
     border: 1px solid #dddddd;
     border-radius: 3px;
     margin-bottom: 20px;
-}
-
-/* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
-
-@media (max-width: 768px) {
-    #sidebar {
-        margin-left: -250px;
-    }
-    #sidebar.active {
-        margin-left: 0;
-    }
-    #content {
-        width: 100%;
-    }
-    #content.active {
-        width: calc(100% - 250px);
-    }
-    #sidebarCollapse span {
-        display: none;
-    }
 }
 
 /* ---------------------------------------------------
