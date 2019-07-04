@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     else {
         document.querySelector('#result').innerHTML = `You are signed in as ${localStorage.getItem('username')}`;
         document.querySelector('#signout').style.display = "block";
-        document.querySelector('#channelName-form').style.display = "block";
+        document.querySelector('#channel-section').style.display = "block";
+        document.querySelector('#message-section').style.display = "block";
     }
 
     // signing in process
@@ -25,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('username', username);
                 document.querySelector('#username-form').style.display = "none";
                 document.querySelector('#signout').style.display = "block";
-                document.querySelector('#channelName-form').style.display = "block";
+                document.querySelector('#channel-section').style.display = "block";
+                document.querySelector('#message-section').style.display = "block";
                 document.querySelector('#result').innerHTML = `You are signed in as ${username}`;
             }
             else {
@@ -44,7 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#signout').onclick = () => {
         localStorage.removeItem('username');
         document.querySelector('#signout').style.display = "none";
-        document.querySelector('#channelName-form').style.display = "none";
+        document.querySelector('#channel-section').style.display = "none";
+        document.querySelector('#message-section').style.display = "none";
         document.querySelector('#username').value = "";
         document.querySelector('#result').innerHTML = "";
         document.querySelector('#username-form').style.display = "block";
@@ -60,12 +63,22 @@ document.addEventListener('DOMContentLoaded', () => {
             channelName = document.querySelector('#channelName').value;
             socket.emit('channelNameCheck', channelName);
         };
+        document.querySelector('#messageSubmit').onclick = () => {
+            const test = document.querySelector('#newMessage').value;
+            localStorage.setItem('messageTest', test);
+            socket.emit('testMessage', {'test': test});
+        };
     });
 
     socket.on('addChannel', data => {
         if (data.success == 0) {
             alert('Channel name already in use, please choose another.');
         }
+    });
+
+    // When a new message is added, add to the unordered list
+    socket.on('newMessage', data => {
+        document.querySelector('#messages').innerHTML = localStorage.getItem('messageTest');
     });
 
 });

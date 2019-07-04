@@ -42,6 +42,12 @@ def channelNameCheck(channelName):
     emit("addChannel", status, broadcast=True)
 
 
+@socketio.on("testMessage")
+def testMessage(data):
+    test = data["test"]
+    emit("newMessage", {"test": test}, broadcast=True)
+
+
 if __name__ == '__main__':
     socketio.run(app)
     

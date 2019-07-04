@@ -43,26 +43,41 @@
                             <input class="btn btn-outline-secondary" id="submit" type="submit" value="Submit">
                         </div>
                     </form>
-                    <form action="" class="content-section form-inline hidden" id="channelName-form">
-                        <div class="form-group mx-sm-3">
-                            <input class="form-control mr-3" id="channelName" autocomplete="off" autofocus placeholder="Enter Channel Name" type="text">
-                            <input class="btn btn-outline-secondary" id="channelSubmit" type="submit" value="Submit">
-                        </div>
-                    </form>
                     <br>
                     <div id="result"></div>
                     <br>
-                    <div class="mt-5" style="text-align:left;">
-                        {% if channels["total"] > 0 %}
-                            <p>Number of Channels: <span id="channels">{{ channels["total"] }}</span></p>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <ul id="channels-list">
-                            {% for channelName in channelNames %}
-                                <li>{{ channelName }}</li>
-                            {% endfor %}
-                        </ul>
+                    <div class="row">
+                        <div class="content-section hidden col-lg-5" id="channel-section">
+                            {% if channels["total"] > 0 %}
+                                <div style="text-align:left;">
+                                    <p>Number of Channels: <span id="channels">{{ channels["total"] }}</span></p>
+                                </div>
+                                <div>
+                                    <ul id="channels-list">
+                                        {% for channelName in channelNames %}
+                                            <li>{{ channelName }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                            <form action="" class="form-inline" id="channelName-form">
+                                <div class="form-group row">
+                                    <input class="form-control col-lg-8 mr-3" id="channelName" autocomplete="off" placeholder="add new channel" type="text">
+                                    <input class="btn btn-sm btn-outline-secondary col-lg-1" id="channelSubmit" type="submit" value="&#10148;">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="content-section hidden col-lg-6" id="message-section">
+                            <p id="messages">
+                            <p>
+                            <form action="" class="form-inline" id="newMessage-form">
+                                <div class="form-group row">
+                                    <input class="form-control col-lg-10 mr-3" id="newMessage" autocomplete="off" enabled placeholder="enter message" type="text">
+                                    <input class="btn btn-sm btn-outline-secondary col-lg-1" enabled id="messageSubmit" type="submit" value="&#10148;">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="footer">
