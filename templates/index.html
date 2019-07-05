@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        {% if title %}
+            <title>Flack - {{ title }}</title>
+        {% else %}
+            <title>Project 2 - Flack</title>
+        {% endif %}
+
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <!-- Local CSS File -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+        <!-- Local JS File -->
+        <script src="{{ url_for('static', filename='index.js') }}"></script>
+        <!-- SocketIO JS File -->
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+
+    </head>
+    <body>
+
+        <div class="wrapper">
+            <!-- Page Content  -->
+            <div id="content">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="{{ url_for('index') }}">
+                            <h3>CS50 Web Programming - Project 2</h3>
+                        </a>
+                    </div>
+                    <button class="btn btn-secondary hidden" type="button" id="signout">Sign Out</button>
+                </nav>
+                <div class="inside-content">
+                    <form method="POST" action="" class="content-section form-inline hidden" id="username-form">
+                        <div class="form-group mx-sm-3">
+                            <input class="form-control mr-3" id="username" autocomplete="off" autofocus placeholder="Enter Username" type="text">
+                            <input class="btn btn-outline-secondary" id="submit" type="submit" value="Submit">
+                        </div>
+                    </form>
+                    <br>
+                    <div id="result"></div>
+                    <br>
+                    <div class="row">
+                        <div class="content-section hidden col-lg-5" id="channel-section">
+                            {% if channels["total"] > 0 %}
+                                <div style="text-align:left;">
+                                    <p>Number of Channels: <span id="channels">{{ channels["total"] }}</span></p>
+                                </div>
+                                <div>
+                                    <ul id="channels-list">
+                                        {% for channelName in channelNames %}
+                                            <li>{{ channelName }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                            <form action="" class="form-inline" id="channelName-form">
+                                <div class="form-group row">
+                                    <input class="form-control col-lg-8 mr-3" id="channelName" autocomplete="off" placeholder="add new channel" type="text">
+                                    <input class="btn btn-sm btn-outline-secondary col-lg-1" id="channelSubmit" type="submit" value="&#10148;">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="content-section hidden col-lg-6" id="message-section">
+                            <p id="messages">
+                            <p>
+                            <form action="" class="form-inline" id="newMessage-form">
+                                <div class="form-group row">
+                                    <input class="form-control col-lg-10 mr-3" id="newMessage" autocomplete="off" enabled placeholder="enter message" type="text">
+                                    <input class="btn btn-sm btn-outline-secondary col-lg-1" enabled id="messageSubmit" type="submit" value="&#10148;">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="line"></div>
+                    <p>Copyright &#169; 2019 Enda McCarthy</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- jQuery CDN - Slim version (=without AJAX) -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    </body>
+</html>
