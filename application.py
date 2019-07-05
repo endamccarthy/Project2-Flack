@@ -32,20 +32,20 @@ def signin():
 def channelNameCheck(channelName):
     if channelName in channelNames:
         status["success"] = 0
-        emit("addChannel", status, broadcast=False)
+        emit("addChannel", {"channelName": "invalid"}, broadcast=False)
         print(status)
         return False
     channelNames.append(channelName)
     channels["total"] += 1
     status["success"] = 1
     print(status)
-    emit("addChannel", status, broadcast=True)
+    emit("addChannel", {"channelName": channelName}, broadcast=True)
 
 
-@socketio.on("testMessage")
-def testMessage(data):
-    test = data["test"]
-    emit("newMessage", {"test": test}, broadcast=True)
+@socketio.on("addMessage")
+def addMessage(data):
+    message = data["message"]
+    emit("newMessage", {"message": message}, broadcast=True)
 
 
 if __name__ == '__main__':

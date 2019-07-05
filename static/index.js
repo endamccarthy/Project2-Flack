@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // sign out
     document.querySelector('#signout').onclick = () => {
         localStorage.removeItem('username');
+        localStorage.removeItem('count');
         document.querySelector('#signout').style.display = "none";
         document.querySelector('#channel-section').style.display = "none";
         document.querySelector('#message-section').style.display = "none";
@@ -56,29 +57,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // connect to websocket
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+    
 
     // when connected, configure add channel button
     socket.on('connect', () => {
+
         document.querySelector('#channelSubmit').onclick = () => {
             channelName = document.querySelector('#channelName').value;
             socket.emit('channelNameCheck', channelName);
         };
+
         document.querySelector('#messageSubmit').onclick = () => {
-            const test = document.querySelector('#newMessage').value;
-            localStorage.setItem('messageTest', test);
-            socket.emit('testMessage', {'test': test});
+            const message = document.querySelector('#newMessage').value;
+            socket.emit('addMessage', {'message': message});
         };
+
     });
 
+
     socket.on('addChannel', data => {
-        if (data.success == 0) {
+        if (data.channelName == "invalid") {
             alert('Channel name already in use, please choose another.');
+        }
+        else {
+            //localStorage.removeItem('count');
+            if (!localStorage.getItem("count")) {
+                localStorage.setItem("count", 0);
+            }
+            var channels = [];
+            var x = parseInt(localStorage.getItem("count"));
+            channels[x] = data.channelName;
+            alert(x);
+            localStorage.setItem("count", (x + 1));
+            localStorage.setItem("channels", JSON.stringify(channels));
+            var storedChannels = JSON.parse(localStorage["channels"]);
+            alert(storedChannels);
         }
     });
 
     // When a new message is added, add to the unordered list
     socket.on('newMessage', data => {
-        document.querySelector('#messages').innerHTML = localStorage.getItem('messageTest');
+        const li = document.createElement('li');
+        li.innerHTML = `${data.message}`;
+        document.querySelector('#messages').append(li);
     });
 
 });
+
