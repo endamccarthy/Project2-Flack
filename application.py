@@ -10,12 +10,11 @@ socketio = SocketIO(app)
 
 channels = {"total": 0}
 channelNames = []
-status = {"success": 1}
 
 
 @app.route("/")
 def index():
-    return render_template("index.html", title="Home", channels=channels, channelNames=channelNames, status=status)
+    return render_template("index.html", title="Home", channels=channels, channelNames=channelNames)
 
 
 @app.route("/signin", methods=["POST"])
@@ -31,14 +30,10 @@ def signin():
 @socketio.on("channelNameCheck")
 def channelNameCheck(channelName):
     if channelName in channelNames:
-        status["success"] = 0
         emit("addChannel", {"channelName": "invalid"}, broadcast=False)
-        print(status)
         return False
     channelNames.append(channelName)
     channels["total"] += 1
-    status["success"] = 1
-    print(status)
     emit("addChannel", {"channelName": channelName}, broadcast=True)
 
 

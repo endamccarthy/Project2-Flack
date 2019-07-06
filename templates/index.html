@@ -55,7 +55,7 @@
                                 <div>
                                     <ul id="channels-list">
                                         {% for channelName in channelNames %}
-                                            <li>{{ channelName }}</li>
+                                            <li><a href="#" id="test1">{{ channelName }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </div>
@@ -70,8 +70,8 @@
                         <div class="col-lg-1"></div>
                         <div class="content-section hidden col-lg-6" id="message-section">
                             <div class="row" id="newMessage-form">
-                                <input class="col-lg-10 mr-3" id="newMessage" autocomplete="off" enabled placeholder="enter message" type="text">
-                                <input class="btn btn-sm btn-outline-secondary col-lg-1" enabled id="messageSubmit" type="submit" value="&#10148;">
+                                <input class="col-lg-10 mr-3" id="newMessage" autocomplete="off" disabled placeholder="enter message" type="text">
+                                <input class="btn btn-sm btn-outline-secondary col-lg-1" disabled id="messageSubmit" type="submit" value="&#10148;">
                             </div>
                             <ul id="messages">
                             <ul>

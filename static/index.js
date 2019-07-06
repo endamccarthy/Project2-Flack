@@ -55,6 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    if (document.querySelector('#test1')) {
+        document.querySelector('#test1').onclick = () => {
+            document.querySelector('#newMessage').disabled = false;
+            document.querySelector('#messageSubmit').disabled = false;
+        }
+    }
+    
+
     // connect to websocket
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
     
@@ -78,20 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.on('addChannel', data => {
         if (data.channelName == "invalid") {
             alert('Channel name already in use, please choose another.');
-        }
-        else {
-            //localStorage.removeItem('count');
-            if (!localStorage.getItem("count")) {
-                localStorage.setItem("count", 0);
-            }
-            var channels = [];
-            var x = parseInt(localStorage.getItem("count"));
-            channels[x] = data.channelName;
-            alert(x);
-            localStorage.setItem("count", (x + 1));
-            localStorage.setItem("channels", JSON.stringify(channels));
-            var storedChannels = JSON.parse(localStorage["channels"]);
-            alert(storedChannels);
         }
     });
 
