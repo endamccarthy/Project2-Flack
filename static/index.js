@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#username-form').style.display = "block";
     }
 
-
+    // when channel is clicked, activate messages 
     if (document.querySelector('#test1')) {
         document.querySelector('#test1').onclick = () => {
             document.querySelector('#newMessage').disabled = false;
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
-
+    // error alert if channel name is already used
     socket.on('addChannel', data => {
         if (data.channelName == "invalid") {
             alert('Channel name already in use, please choose another.');
