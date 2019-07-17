@@ -170,7 +170,7 @@ const show_message = data => {
         li.classList.add("list-group-item");
 
         // shows username in bold, then the message, then the date created at in small text
-        li.innerHTML = `<strong>${data.username}</strong>: ${data.message} <small class="text-muted d-flex justify-content-end">
+        li.innerHTML = `<strong>${data.username}</strong>: &nbsp;${data.message} <small class="text-muted d-flex justify-content-end">
                         ${get_date_string(data.created_at)}</small>`;
         ul.appendChild(li);
 

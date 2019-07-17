@@ -1,9 +1,91 @@
-#msg-list {
-  height: 80vh;
+/* ---------------------------------------------------
+    TYPE IN THIS COMMAND TO SETUP:
+        sass static/style.scss static/style.css
+----------------------------------------------------- */
+/* ---------------------------------------------------
+    SASS VARIABLES
+----------------------------------------------------- */
+/* Navbar */
+/* Background Light Pink */
+/* Inheritance */
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* ---------------------------------------------------
+    GENERAL STYLE
+----------------------------------------------------- */
+body {
+  background: #fafafa;
+}
+
+a,
+a:hover,
+a:focus {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+li:hover {
+  color: #e29b9b;
+  background: #948c8c;
+}
+
+.navbar {
+  min-height: 50px;
+  padding: 0px 100px;
+  background: #fa6d6d;
+  border: none;
+  border-radius: 0;
+  margin-bottom: 20px;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px dashed #ddd;
+  margin: 20px 0;
+}
+
+.footer {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 5px;
+  padding-top: 10px;
+  font-size: 0.8em;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+.content-section {
+  background: #fdefef;
+  border: 1px solid #dddddd;
+  border-radius: 6px;
+  margin-bottom: 5px;
+}
+
+/* ---------------------------------------------------
+    SCROLLING
+----------------------------------------------------- */
+#message-list {
+  height: 65vh;
   overflow: auto;
 }
 
 #channel-list {
-  height: 80vh;
+  height: 65vh;
   overflow: auto;
 }
+
+/* ---------------------------------------------------
+    HIDDEN CONTENT
+----------------------------------------------------- */
+.hidden {
+  display: none;
+}
+
+/*# sourceMappingURL=style.css.map */
