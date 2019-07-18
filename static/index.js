@@ -93,6 +93,7 @@ const setup = socket => {
     let channel_name_input = document.querySelector("#channel-name");
     let message_form = document.querySelector("#message-form");
     let message_input = document.querySelector("#message-text");
+    let username = localStorage.getItem("username");
     
     // when new channel is added....
     channel_form.addEventListener("submit", e => {
@@ -104,7 +105,7 @@ const setup = socket => {
             console.log("no name");
             return;
         }
-        socket.emit("new channel", { name });
+        socket.emit("new channel", { name, username });
         channel_name_input.value = "";
     });
 
@@ -125,7 +126,7 @@ const setup = socket => {
         }
         document.querySelector('#no-messages').style.display = "none";
         socket.emit("new message", {
-            message, channel, username: localStorage.getItem("username")
+            message, channel, username: username
         });
         message_input.value = "";
     });

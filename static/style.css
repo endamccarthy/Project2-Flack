@@ -100,4 +100,9 @@ h1 {
   display: inline;
 }
 
+#delete-channel {
+  float: right;
+  margin-top: 10px;
+}
+
 /*# sourceMappingURL=style.css.map */

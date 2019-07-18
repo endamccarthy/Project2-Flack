@@ -12,7 +12,7 @@ socketio = SocketIO(app)
 
 # server side memory (deque ensures only 100 most recent messages are saved, the rest will be popped off)
 USERS = {}
-CHANNELS = {"Public": deque([], maxlen=100)}
+CHANNELS = {"Public": {"messages": deque([], maxlen=100), "username": "default"}}
 
 
 @app.route("/")
@@ -29,9 +29,6 @@ def connection():
 @socketio.on('userdata')
 def user_data(data):
     if 'username' in data:
-        if data['username'] in USERS:
-                print("test1")
-                print(USERS)
         USERS[data['username']] = request.sid
 
 
@@ -41,7 +38,9 @@ def new_channel(data):
     if data['name'] in CHANNELS:
         return False
     else:
-        CHANNELS[data['name']] = deque(maxlen=100)
+        CHANNELS[data['name']] = {}
+        CHANNELS[data['name']]['messages'] = deque(maxlen=100)
+        CHANNELS[data['name']]['username'] = data['username']
         emit('new channel', {"name": data['name']}, broadcast=True)
 
 
@@ -50,7 +49,7 @@ def new_channel(data):
 def new_message(data):
     if 'channel' in data:
         data['created_at'] = int(time.time())
-        CHANNELS[data['channel']].append(data)
+        CHANNELS[data['channel']]['messages'].append(data)
         emit('message', data, broadcast=True)
 
 
@@ -64,7 +63,7 @@ def get_channels():
 @socketio.on('get messages')
 def get_messages(data):
     if 'name' in data:
-        emit('messages', list(CHANNELS[data['name']]))
+        emit('messages', list(CHANNELS[data['name']]['messages']))
 
 
 # DELETE....
