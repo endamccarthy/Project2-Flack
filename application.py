@@ -17,7 +17,7 @@ CHANNELS = {"Public": deque([], maxlen=100)}
 
 @app.route("/")
 def index():
-    return render_template("index1.html")
+    return render_template("index.html")
 
 # DELETE.....
 @socketio.on('connect')
@@ -29,6 +29,9 @@ def connection():
 @socketio.on('userdata')
 def user_data(data):
     if 'username' in data:
+        if data['username'] in USERS:
+                print("test1")
+                print(USERS)
         USERS[data['username']] = request.sid
 
 

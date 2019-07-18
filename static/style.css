@@ -7,10 +7,13 @@
 ----------------------------------------------------- */
 /* Navbar */
 /* Background Light Pink */
+/* Hover Text */
+/* Hover Background */
+/* Selected Background */
+@import "https://fonts.googleapis.com/css?family=Raleway&display=swap";
 /* Inheritance */
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 /* ---------------------------------------------------
@@ -29,8 +32,8 @@ a:focus {
 }
 
 li:hover {
-  color: #e29b9b;
-  background: #948c8c;
+  color: #a73636;
+  background: #d1c6c6;
 }
 
 .navbar {
@@ -56,6 +59,15 @@ li:hover {
   padding-bottom: 5px;
   padding-top: 10px;
   font-size: 0.8em;
+}
+
+h1 {
+  display: inline;
+}
+
+.selected {
+  color: #a73636;
+  background: #afaaaa;
 }
 
 /* ---------------------------------------------------
@@ -84,8 +96,8 @@ li:hover {
 /* ---------------------------------------------------
     HIDDEN CONTENT
 ----------------------------------------------------- */
-.hidden {
-  display: none;
+.temp {
+  display: inline;
 }
 
 /*# sourceMappingURL=style.css.map */
