@@ -67,13 +67,22 @@ const initialize = username => {
         socket.on("messages", data => {
             clear_messages();
             if(data) {
-                if(data.length < 1) {
+                // show no messages text if channel is empty
+                if(data.messages.length < 1) {
                     document.querySelector('#no-messages').style.display = "inline";
                 }
                 else {
                     document.querySelector('#no-messages').style.display = "none";
                 }
-                data.forEach(message => {
+                // show delete channel icon if user has created the channel
+                if(data.username == localStorage.getItem("username")) {
+                    document.querySelector('#delete-channel').style.display = "block";
+                }
+                else {
+                    document.querySelector('#delete-channel').style.display = "none";
+                }
+                // iterate through list of messages in channel and send each to show_message function
+                data.messages.forEach(message => {
                     show_message(message);
                 });
             }
@@ -125,9 +134,7 @@ const setup = socket => {
             return;
         }
         document.querySelector('#no-messages').style.display = "none";
-        socket.emit("new message", {
-            message, channel, username: username
-        });
+        socket.emit("new message", { message, channel, username: username });
         message_input.value = "";
     });
 

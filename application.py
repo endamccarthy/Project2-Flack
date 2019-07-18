@@ -12,7 +12,7 @@ socketio = SocketIO(app)
 
 # server side memory (deque ensures only 100 most recent messages are saved, the rest will be popped off)
 USERS = {}
-CHANNELS = {"Public": {"messages": deque([], maxlen=100), "username": "default"}}
+CHANNELS = {"Public": {"messages": deque([], maxlen=100), "username": "default"}}       # username keeps track of who created each channel
 
 
 @app.route("/")
@@ -59,11 +59,11 @@ def get_channels():
     emit('channels', list(CHANNELS.keys()))
 
 
-# emits a list of all the messages in a selected channel
+# emits a dictionary containing a list of all the messages in a selected channel and the username of the creater of the channel
 @socketio.on('get messages')
 def get_messages(data):
     if 'name' in data:
-        emit('messages', list(CHANNELS[data['name']]['messages']))
+        emit('messages', {"messages": list(CHANNELS[data['name']]['messages']), "username": CHANNELS[data['name']]['username']})
 
 
 # DELETE....
