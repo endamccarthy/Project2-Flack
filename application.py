@@ -62,8 +62,18 @@ def get_channels():
 # emits a dictionary containing a list of all the messages in a selected channel and the username of the creater of the channel
 @socketio.on('get messages')
 def get_messages(data):
-    if 'name' in data:
+    if 'deleted' in data:
+        emit('messages', {"messages": list(CHANNELS[data['name']]['messages']), "username": CHANNELS[data['name']]['username']}, broadcast=True)
+    elif 'name' in data:
         emit('messages', {"messages": list(CHANNELS[data['name']]['messages']), "username": CHANNELS[data['name']]['username']})
+
+
+@socketio.on('delete channel')
+def delete_channel(data):
+    if 'name' in data:
+        if data['name'] in CHANNELS:
+            del CHANNELS[data['name']]
+            emit('channels', list(CHANNELS.keys()), broadcast=True)
 
 
 # DELETE....
@@ -72,6 +82,7 @@ def reset():
     USERS.clear()
     CHANNELS.clear()
     CHANNELS['Public'] = deque(maxlen=100)
+
 
 
 if __name__ == '__main__':

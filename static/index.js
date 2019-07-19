@@ -60,8 +60,15 @@ const initialize = username => {
             for (let each_name of data) {
                 show_channel(each_name, socket);
             }
-            show_active_channel(localStorage.getItem("channel"));
-            change_message_title(localStorage.getItem("channel"));
+            if(localStorage.getItem("channel")) {
+                show_active_channel(localStorage.getItem("channel"));
+                change_message_title(localStorage.getItem("channel"));
+            }
+            else {
+                show_active_channel("Public");
+                change_message_title("Public");
+                socket.emit("get messages", { name: "Public", deleted: true })
+            }
         });
 
         socket.on("messages", data => {
@@ -145,6 +152,9 @@ const setup = socket => {
     if(localStorage.getItem("channel")) {
         socket.emit("get messages", { name: localStorage.getItem("channel") });
     }
+    else {
+        socket.emit("get messages", { name: "Public" });
+    }
 };
 
 
@@ -162,6 +172,12 @@ const show_channel = (name, socket) => {
         socket.emit("get messages", { name });
         change_message_title(name);
         show_active_channel(name);
+
+        document.querySelector('#delete-channel').onclick = () => {
+            console.log("testing delete");
+            localStorage.removeItem("channel");
+            socket.emit("delete channel", { name: name });
+        };
     });
 
     ul.appendChild(li);
@@ -169,7 +185,7 @@ const show_channel = (name, socket) => {
 
 
 const show_message = data => {
-    if(localStorage.getItem("channel") == data.channel) {
+    if(localStorage.getItem("channel") == data.channel || data.channel == "Public") {
         let ul = document.querySelector("#message-list");
         let li = document.createElement("li");
         li.classList.add("list-group-item");
@@ -216,7 +232,6 @@ const clear_channels = () => {
     let ul = document.querySelector("#channel-list");
     ul.innerHTML = "";
 };
-
 
 const get_date_string = time => {
     time = new Date(time * 1000);
