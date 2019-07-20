@@ -64,6 +64,7 @@ const initialize = username => {
                 show_active_channel(localStorage.getItem("channel"));
                 change_message_title(localStorage.getItem("channel"));
             }
+            // if a channel is being deleted....
             if(data.deleted) {
                 socket.emit("get messages", { name: "Public", deleted: true });
             }
@@ -86,8 +87,8 @@ const initialize = username => {
                 else {
                     document.querySelector('#delete-channel').style.display = "none";
                 }
+                // if a channel is being deleted, set Public as the active channel for all users
                 if(data.deleted) {
-                    console.log("testing01")
                     show_active_channel("Public");
                     change_message_title("Public");
                 }
@@ -97,12 +98,11 @@ const initialize = username => {
                 });
             }
         });
-
+        /* reset button for testing purposes....
         document.querySelector('#reset').onclick = () => {
             socket.emit("reset");
             localStorage.removeItem("username");
-        };
-
+        }; */
     });
 };
 
@@ -175,9 +175,8 @@ const show_channel = (name, socket) => {
         socket.emit("get messages", { name });
         change_message_title(name);
         show_active_channel(name);
-
+        // if delete channel is clicked on....
         document.querySelector('#delete-channel').onclick = () => {
-            console.log("testing delete");
             localStorage.removeItem("channel");
             clear_messages();
             socket.emit("delete channel", { name: name });
@@ -236,6 +235,7 @@ const clear_channels = () => {
     let ul = document.querySelector("#channel-list");
     ul.innerHTML = "";
 };
+
 
 const get_date_string = time => {
     time = new Date(time * 1000);

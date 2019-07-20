@@ -19,11 +19,6 @@ CHANNELS = {"Public": {"messages": deque([], maxlen=100), "username": "default"}
 def index():
     return render_template("index.html")
 
-# DELETE.....
-@socketio.on('connect')
-def connection():
-    print("new user connected")
-
 
 # if a username is passed in then the associated session ID is assigned to the username
 @socketio.on('userdata')
@@ -62,12 +57,14 @@ def get_channels():
 # emits a dictionary containing a list of all the messages in a selected channel and the username of the creater of the channel
 @socketio.on('get messages')
 def get_messages(data):
+    # if a channel has just been deleted then the emit will be broadcast to all, or else it will just emit local to user
     if 'deleted' in data:
         emit('messages', {"messages": list(CHANNELS[data['name']]['messages']), "username": CHANNELS[data['name']]['username'], "deleted": True}, broadcast=True)
     elif 'name' in data:
         emit('messages', {"messages": list(CHANNELS[data['name']]['messages']), "username": CHANNELS[data['name']]['username']})
 
 
+# removes the channel from the CHANNELS dictionary
 @socketio.on('delete channel')
 def delete_channel(data):
     if 'name' in data:
@@ -76,14 +73,14 @@ def delete_channel(data):
             emit('channels', {"channels": list(CHANNELS.keys()), "deleted": True}, broadcast=True)
 
 
-# DELETE....
+'''
+# Reset button for testing purposes
 @socketio.on('reset')
 def reset():
     USERS.clear()
     CHANNELS.clear()
     CHANNELS['Public'] = deque(maxlen=100)
-
-
+'''
 
 if __name__ == '__main__':
     socketio.run(app)
