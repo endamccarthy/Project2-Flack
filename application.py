@@ -56,14 +56,14 @@ def new_message(data):
 # emits a list of all the channel names
 @socketio.on('get channels')
 def get_channels():
-    emit('channels', list(CHANNELS.keys()))
+    emit('channels', {"channels": list(CHANNELS.keys())})
 
 
 # emits a dictionary containing a list of all the messages in a selected channel and the username of the creater of the channel
 @socketio.on('get messages')
 def get_messages(data):
     if 'deleted' in data:
-        emit('messages', {"messages": list(CHANNELS[data['name']]['messages']), "username": CHANNELS[data['name']]['username']}, broadcast=True)
+        emit('messages', {"messages": list(CHANNELS[data['name']]['messages']), "username": CHANNELS[data['name']]['username'], "deleted": True}, broadcast=True)
     elif 'name' in data:
         emit('messages', {"messages": list(CHANNELS[data['name']]['messages']), "username": CHANNELS[data['name']]['username']})
 
@@ -73,7 +73,7 @@ def delete_channel(data):
     if 'name' in data:
         if data['name'] in CHANNELS:
             del CHANNELS[data['name']]
-            emit('channels', list(CHANNELS.keys()), broadcast=True)
+            emit('channels', {"channels": list(CHANNELS.keys()), "deleted": True}, broadcast=True)
 
 
 # DELETE....
@@ -87,3 +87,4 @@ def reset():
 
 if __name__ == '__main__':
     socketio.run(app)
+

@@ -57,17 +57,15 @@ const initialize = username => {
             clear_channels();
             // data is a list of all the channel names, the following iterates over each name sending it to 
             // show_channel where it is then added to the HTML list and displayed
-            for (let each_name of data) {
+            for (let each_name of data.channels) {
                 show_channel(each_name, socket);
             }
             if(localStorage.getItem("channel")) {
                 show_active_channel(localStorage.getItem("channel"));
                 change_message_title(localStorage.getItem("channel"));
             }
-            else {
-                show_active_channel("Public");
-                change_message_title("Public");
-                socket.emit("get messages", { name: "Public", deleted: true })
+            if(data.deleted) {
+                socket.emit("get messages", { name: "Public", deleted: true });
             }
         });
 
@@ -87,6 +85,11 @@ const initialize = username => {
                 }
                 else {
                     document.querySelector('#delete-channel').style.display = "none";
+                }
+                if(data.deleted) {
+                    console.log("testing01")
+                    show_active_channel("Public");
+                    change_message_title("Public");
                 }
                 // iterate through list of messages in channel and send each to show_message function
                 data.messages.forEach(message => {
@@ -176,6 +179,7 @@ const show_channel = (name, socket) => {
         document.querySelector('#delete-channel').onclick = () => {
             console.log("testing delete");
             localStorage.removeItem("channel");
+            clear_messages();
             socket.emit("delete channel", { name: name });
         };
     });
