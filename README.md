@@ -1,6 +1,7 @@
 ## Project 2 - Flack
 ### Enda McCarthy
 #### Web Programming with Python and JavaScript
+#### July 2019
 
 This is a messaging application. Users can enter with a username, create channels and send messages back and forth within the channels.
 
