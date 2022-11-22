@@ -28,7 +28,7 @@ MarkupSafe==1.0
 monotonic==1.5
 passlib==1.7.1
 pexpect==4.7.0
-Pillow==7.1.0
+Pillow==9.3.0
 ptyprocess==0.6.0
 pycparser==2.19
 python-engineio==2.2.0
